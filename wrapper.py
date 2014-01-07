@@ -4,9 +4,9 @@ Created on Sun Dec 29 22:32:52 2013
 
 @author: quazythain
 """
-# hdb.insert('users', {'name':'HeyHey', 'last_name':'Namaste',
-#            'user_login':'rishikesh'})
-# hdb.select('*', 'users', 'user_id=2')
+# hdb.insert("users", {"name":"HeyHey", "last_name":"Namaste",
+#            "user_login":"rishikesh"})
+# hdb.select("*", "users", "user_id=2")
 import MySQLdb
 
 
@@ -20,29 +20,29 @@ class HeyheyDB(object):
             print "Can't connect to database"
 
     def select(self, fields, table, where):
-        if fields == "*":
-            q = "SELECT * FROM {0}".format(table)
-        else:
+        #if fields == "*":
+        #    q = "SELECT * FROM {0}".format(table)
+        #else:
             get_fields = fields
-            fields = ', '.join(get_fields)
+            fields = ", ".join(get_fields)
 
             q = "SELECT {0} FROM {1} WHERE {2};".format(fields, table, where)
-        try:
+        #try:
             self.cursor.execute(q)
             output = self.cursor.fetchall()
             print output
             return output
-        except:
-            print "Can't execute sql query"
+        #except:
+        #    print "Can't execute sql query"
 
     def insert(self, table, fields):
         get_columns = fields.keys()
-        columns = ', '.join(get_columns)
+        columns = ", ".join(get_columns)
         get_values = fields.values()
         cortege_values = []
         for value in get_values:
             cortege_values.append("'{0}'".format(value))
-        values = ', '.join(cortege_values)
+        values = ", ".join(cortege_values)
 
         q = "INSERT INTO {0} ({1}) VALUE ({2});".format(table, columns, values)
         try:
@@ -57,7 +57,7 @@ class HeyheyDB(object):
         cortege_fields = []
         for key, value in get_fields:
             cortege_fields.append("{0}='{1}'".format(key, value))
-        complete_fields = ', '.join(cortege_fields)
+        complete_fields = ", ".join(cortege_fields)
 
         q = "UPDATE {0} SET {1} WHERE {2}".format(table, complete_fields,
                                                   where)
@@ -89,3 +89,4 @@ class HeyheyDB(object):
 
 if __name__ == "__main__":
     hdb = HeyheyDB()
+#    hdb.select("*", "users", "user_id=2")
